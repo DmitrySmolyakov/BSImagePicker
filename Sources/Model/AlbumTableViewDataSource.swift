@@ -58,9 +58,6 @@ final class AlbumTableViewDataSource : NSObject, UITableViewDataSource {
         cell.albumTitleLabel.text = album.localizedTitle
 
         let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [
-            NSSortDescriptor(key: "modificationDate", ascending: false)
-        ]
         fetchOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
 
         let scale = UIScreen.main.scale

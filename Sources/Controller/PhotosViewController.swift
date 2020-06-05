@@ -216,9 +216,6 @@ final class PhotosViewController : UICollectionViewController {
   func initializePhotosDataSource(_ album: PHAssetCollection) {
         // Set up a photo data source with album
         let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [
-            NSSortDescriptor(key: "modificationDate", ascending: false)
-        ]
         fetchOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
         initializePhotosDataSourceWithFetchResult(PHAsset.fetchAssets(in: album, options: fetchOptions))
     }
@@ -260,7 +257,8 @@ extension PhotosViewController {
 
         // We need a cell
         guard let cell = collectionView.cellForItem(at: indexPath) as? PhotoCell else { return false }
-        let asset = photosDataSource.fetchResult.object(at: indexPath.row)
+        let reversedIndex = photosDataSource.fetchResult.count - indexPath.row - 1
+        let asset = photosDataSource.fetchResult.object(at: reversedIndex)
 
         // Select or deselect?
         if assetStore.contains(asset) { // Deselect
